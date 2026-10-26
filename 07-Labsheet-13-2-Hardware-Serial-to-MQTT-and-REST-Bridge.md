@@ -308,16 +308,26 @@ dotnet run
 curl http://localhost:5000/api/telemetry/latest
 ```
 *สังเกตว่าจะได้ข้อมูล JSON ของแรงดันไฟฟ้าทันที!*
+
+<img width="1512" height="601" alt="ภาพถ่ายหน้าจอ 2569-10-26 เวลา 10 39 44" src="https://github.com/user-attachments/assets/54b02c78-e918-4e6f-b584-9c7739258efe" />
+
 3. เปิด `mosquitto_sub`:
 ```powershell
 mosquitto_sub -h 127.0.0.1 -p 1883 -t "iot/esp32/telemetry" -i "sub_client" -v
 ```
 *สังเกตว่าข้อมูลที่อ่านจากสาย USB Serial ถูกส่งต่อเข้าหัวข้อ MQTT อัตโนมัติ!*
+
+<img width="1512" height="982" alt="ภาพถ่ายหน้าจอ 2569-10-26 เวลา 10 40 54" src="https://github.com/user-attachments/assets/87996f34-8edd-4739-8f53-58a8e63cf0c2" />
+
 4. ทดสอบสั่งเปิด-ปิดไฟผ่าน REST API:
 ```powershell
 curl -X POST http://localhost:5000/api/led/on
 ```
 *สังเกตว่าคำสั่ง `LED:ON` ถูกส่งผ่านสาย USB เข้าไปควบคุมบอร์ดทันที!*
+
+<img width="802" height="471" alt="ภาพถ่ายหน้าจอ 2569-10-26 เวลา 10 42 12" src="https://github.com/user-attachments/assets/7f422e70-8950-44d1-9575-d750055fcfef" />
+
+<img width="549" height="728" alt="image" src="https://github.com/user-attachments/assets/e231c197-29de-4fd6-a0d2-bb6779613694" />
 
 ---
 
