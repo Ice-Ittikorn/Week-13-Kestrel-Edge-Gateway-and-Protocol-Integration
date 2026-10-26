@@ -156,6 +156,8 @@ mosquitto_pub -h 127.0.0.1 -p 1883 -t "test/edge/topic" -m "Hello from CLI via K
 * หน้าต่าง Kestrel จะพิมพ์ Log สีฟ้าว่าดักจับข้อความได้ถูกต้อง
 * หน้าต่าง `mosquitto_sub` จะได้รับข้อความที่ถูกส่งต่อผ่าน Broker สำเร็จทันที
 
+<img width="1512" height="982" alt="ภาพถ่ายหน้าจอ 2569-10-26 เวลา 10 00 00" src="https://github.com/user-attachments/assets/38492de3-0af7-4cfa-97a0-8d3d34e8de4c" />
+
 ---
 
 ## 4. คำถามท้ายการทดลอง (Review Questions)
