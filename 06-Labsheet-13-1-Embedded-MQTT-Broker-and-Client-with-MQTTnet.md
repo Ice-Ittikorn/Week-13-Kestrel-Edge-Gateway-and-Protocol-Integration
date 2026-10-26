@@ -144,6 +144,8 @@ mosquitto_sub -h 127.0.0.1 -p 1883 -t "test/edge/topic" -i "sub_client" -v
 
 *สังเกตหน้าต่างคอนโซลของ Kestrel จะขึ้นข้อความสีเขียวว่ามี Client เชื่อมต่อเข้ามา!*
 
+<img width="1273" height="316" alt="ภาพถ่ายหน้าจอ 2569-10-26 เวลา 09 44 23" src="https://github.com/user-attachments/assets/58d182ff-a961-4ef5-901f-7887107d177c" />
+
 #### 3. เปิดหน้าต่าง PowerShell ที่สาม: ทดสอบ Publish ข้อความ
 ส่งข้อความผ่าน `mosquitto_pub`:
 ```powershell
