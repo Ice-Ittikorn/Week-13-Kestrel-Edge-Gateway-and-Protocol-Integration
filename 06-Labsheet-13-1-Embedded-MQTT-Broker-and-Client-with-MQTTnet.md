@@ -162,4 +162,15 @@ mosquitto_pub -h 127.0.0.1 -p 1883 -t "test/edge/topic" -m "Hello from CLI via K
 
 ## 4. คำถามท้ายการทดลอง (Review Questions)
 1. การรัน Embedded MQTT Broker ภายใน Kestrel มีข้อได้เปรียบกว่าการติดตั้งซอฟต์แวร์ Mosquitto แยกต่างหากอย่างไรในแง่ของการกระจายงาน (Deployment) และการประมวลผลข้อมูลในหน่วยความจำ?
+
+```
+Deployment: Broker ถูกเปิดในโปรเจกต์เดียวกันด้วย AddMqttServer และ listenOptions.UseMqtt() บนพอร์ต 1883 ใน Program.cs จึงรัน dotnet run ครั้งเดียวได้ทั้ง Broker, REST และ SignalR ไม่ต้องติดตั้งหรือตั้งค่า mosquitto.conf แยก และเวอร์ชันของ Broker ผูกกับแพ็กเกจ MQTTnet 4.3.7 ในโปรเจกต์ ย้ายเครื่องแล้วส่งไปชุดเดียว
+หน่วยความจำ: SerialBridgeWorker ส่งข้อความเข้า Broker ด้วย _mqttServer.InjectApplicationMessage ในโปรเซสเดียวกัน ไม่ต้องเปิด TCP connection ไปหา Broker อีกตัว และใช้ GatewayStateStore กับ ProtocolMetrics ร่วมกับโค้ดอื่นได้ตรงๆ
+ข้อเสีย: Gateway กลายเป็นจุดเดียวที่ล้มได้ และ Mosquitto โตเต็มที่กว่าในด้านฟีเจอร์และความเสถียร นอกจากนี้ Broker ในแล็บตั้งแบบ WithDefaultEndpoint() ไม่มี username/password และไม่มี TLS
+```
+
 2. ฟังก์ชัน `InterceptingPublishAsync` ใน MQTTnet สามารถนำไปประยุกต์ใช้ในการกรองข้อมูลที่ผิดปกติ (Edge Validation) ก่อนส่งต่อให้ Client อื่นได้อย่างไร?
+
+```
+InterceptingPublishAsync ทำงานทุกครั้งที่มี Client publish เข้ามา ก่อนที่ Broker จะกระจายข้อความให้ subscriber จึงอ่าน args.ApplicationMessage.Topic และ ConvertPayloadToString() มาตรวจได้ เช่น ตรวจว่า payload ของ iot/esp32/telemetry เป็น JSON ที่มี voltage กับ raw และ voltage อยู่ในช่วง 0 ถึง 3.3 V ถ้าไม่ผ่านให้ตั้ง args.ProcessPublish = false เพื่อทิ้งข้อความนั้นก่อนถึง Flutter หรือเว็บ
+```
